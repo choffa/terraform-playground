@@ -1,0 +1,25 @@
+name: Test time apply
+
+on: workflow_dispatch
+
+jobs:
+  terraform:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.0
+
+      - name: Terraform Init
+        working-directory: ./time
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: ./time
+        run: terraform apply -auto-approve
